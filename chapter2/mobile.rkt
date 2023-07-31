@@ -19,17 +19,22 @@
 (define (right-branch m)
   (car (cdr m)))
 
-(define (total-weight m)
+(define (total-weight-iter m)
   (define (iter b total)
     (if (not (pair? (branch-structure b)))
         (+ total (branch-structure b))
         (iter (branch-structure b) total)))
   (+ (iter (left-branch m) 0) (iter (right-branch m) 0)))
 
-; returns #t if the branch does not contain any mobiles of its own
-(define (is-terminal-branch b)
-  (not (pair? (branch-structure b))))
+(define (total-weight m)
+  (cond ((null? m) 0)
+        ((not (pair? m)) m)
+        (else
+         (+ (total-weight (branch-structure (left-branch m)))
+            (total-weight (branch-structure (right-branch m)))))))
 
+(define (torque-branch b)
+  (* (branch-length b) (total-weight b)))
 
 ; a simple function that simply measures if two
 ; "terminating" mobiles, that is ones who don't have other
@@ -54,4 +59,3 @@
 (define b5 (make-branch 5 b4))
 (define m2 (make-mobile b3 b5))
 ;(balanced-term m1)
-(is-terminal-branch b5)
