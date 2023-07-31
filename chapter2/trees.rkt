@@ -25,5 +25,14 @@
   (iter items '()))
 
 
+(define (fringe t)
+  (cond ((null? t) nil)
+        ((not (pair? (car t))) (cons (car t) (fringe (cdr t))))
+        (else ; we have a pair
+         (append (fringe (car t)) (fringe (cdr t))))))
+
+
+
+
 
 
