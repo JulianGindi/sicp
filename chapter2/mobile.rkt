@@ -33,29 +33,25 @@
          (+ (total-weight (branch-structure (left-branch m)))
             (total-weight (branch-structure (right-branch m)))))))
 
-(define (torque-branch b)
+(define (torque b)
   (* (branch-length b) (total-weight b)))
 
-; a simple function that simply measures if two
-; "terminating" mobiles, that is ones who don't have other
-; mobiles hanging from them.
-; In a way, this is our terminating case
-(define (balanced-term m)
-  (= (* (branch-length (left-branch m)) (branch-structure (left-branch m)))
-     (* (branch-length (right-branch m)) (branch-structure (right-branch m)))))
+(define (balanced? m)
+  (if (not (pair? m))
+      #t
+      (and (= (torque (branch-structure (left-branch m))) (torque (branch-structure (right-branch m))))
+           (balanced? (branch-structure (left-branch m)))
+           (balanced? (branch-structure (right-branch m))))))
           
 
 
 ; some example branches and mobiles
 ; ---------------------------------
-; simple two branch with weights setup
-(define b1 (make-branch 6 10))
-(define b2 (make-branch 3 20))
-(define m1 (make-mobile b1 b2))
+(define m1 (make-mobile (make-branch 2 3) (make-branch 2 3))) 
+(define m2 (make-mobile 
+            (make-branch 4 6) 
+            (make-branch 5 
+                         (make-mobile 
+                          (make-branch 3 7) 
+                          (make-branch 9 8))))) 
 
-; a second mobile with a sub-mobile
-(define b3 (make-branch 6 10))
-(define b4 (make-branch 2 2))
-(define b5 (make-branch 5 b4))
-(define m2 (make-mobile b3 b5))
-;(balanced-term m1)
