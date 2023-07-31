@@ -33,15 +33,17 @@
          (+ (total-weight (branch-structure (left-branch m)))
             (total-weight (branch-structure (right-branch m)))))))
 
-(define (torque b)
-  (* (branch-length b) (total-weight b)))
 
-(define (balanced? m)
-  (if (not (pair? m))
-      #t
-      (and (= (torque (branch-structure (left-branch m))) (torque (branch-structure (right-branch m))))
-           (balanced? (branch-structure (left-branch m)))
-           (balanced? (branch-structure (right-branch m))))))
+ (define (balanced? m) 
+   (cond ((null? m) #t) 
+         ((not (pair? m)) #t) 
+         (else 
+          (and (= (* (branch-length (left-branch m)) 
+                     (total-weight (branch-structure (left-branch m)))) 
+                  (* (branch-length (right-branch m)) 
+                     (total-weight (branch-structure (right-branch m))))) 
+               (balanced? (branch-structure (left-branch   m))) 
+               (balanced? (branch-structure (right-branch  m))))))) 
           
 
 
