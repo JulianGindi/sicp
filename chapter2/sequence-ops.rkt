@@ -31,4 +31,21 @@
   (accumulate (lambda (x y) (+ 1 y)) 0 sequence))
 
 
-(length '(1 2 3 4 5))
+(define
+  (horner-eval x coefficient-sequence)
+  (accumulate
+   (lambda (this-coeff higher-terms)
+     (+ (* x higher-terms) this-coeff))
+   0
+   coefficient-sequence))
+
+(define (enumerate-tree tree) 
+   (cond ((null? tree) nil) 
+         ((not (pair? tree)) (list tree)) 
+         (else (append (enumerate-tree (car tree)) 
+                       (enumerate-tree (cdr tree)))))) 
+
+(define (count-leaves t)
+  (accumulate + 0 (map (lambda (x) 1) (enumerate-tree t))))
+
+(define t (list 1 2 3 (list 4 5 (list 6 7))))
