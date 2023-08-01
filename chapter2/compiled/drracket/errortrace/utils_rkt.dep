@@ -1,1 +1,1 @@
-("8.6" tarm64osx ("752a08bca5cbd4e9745a4fa79718369fcaeb2e4e" . "5f986073fecf1f59ae679b3cd1b5c2a268523873") (collects #"errortrace" #"errortrace-key.rkt") (collects #"sicp" #"lang" #"reader.rkt") (collects #"sicp" #"main.rkt"))
+("8.6" tarm64osx ("0c62ef7274a738441c45d55398454185463a0388" . "5f986073fecf1f59ae679b3cd1b5c2a268523873") (collects #"errortrace" #"errortrace-key.rkt") (collects #"sicp" #"lang" #"reader.rkt") (collects #"sicp" #"main.rkt"))
