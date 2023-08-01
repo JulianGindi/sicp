@@ -20,6 +20,22 @@
                       initial 
                       (cdr sequence)))))
 
+(define (fold-right op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence)
+          (accumulate op 
+                      initial 
+                      (cdr sequence)))))
+
+(define (fold-left op initial sequence)
+  (define (iter result rest)
+    (if (null? rest)
+        result
+        (iter (op result (car rest))
+              (cdr rest))))
+  (iter initial sequence))
+
 (define (map p sequence)
   (accumulate (lambda (x y) (cons (p x) y))
               nil sequence))
@@ -48,4 +64,12 @@
 (define (count-leaves t)
   (accumulate + 0 (map (lambda (x) 1) (enumerate-tree t))))
 
-(define t (list 1 2 3 (list 4 5 (list 6 7))))
+
+(define (accumulate-n op init seqs)
+  (if (null? (car seqs))
+    nil
+    (cons (accumulate op init (map car seqs))
+          (accumulate-n op init (map cdr seqs)))))
+
+(define a '((1 2 3) (4 5 6) (7 8 9) (10 11 12)))
+
