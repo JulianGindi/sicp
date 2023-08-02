@@ -39,6 +39,22 @@
 (define (multiplier p) (cadr p))
 (define (multiplicand p) (caddr p))
 
+(define (base e)
+  (cadr e))
+
+(define (exponent e)
+  (caddr e))
+
+(define (make-exponentiation base exponent)
+  (cond ((= exponent 0) 1)
+        ((= exponent 1) base)
+        ((and (number? base) (number? exponent)) (expt base exponent))
+        (else
+         (list '** base exponent))))
+
+(define (exponentiation? e)
+  (and (pair? e) (eq? (car e) '**)))
+
 
 (define (deriv exp var)
   (cond ((number? exp) 0)
@@ -55,5 +71,14 @@
           (make-product 
            (deriv (multiplier exp) var)
            (multiplicand exp))))
+        ((exponentiation? exp)
+         (make-exponentiation
+          (make-product (exponent exp) (base exp))
+          (- (exponent exp) 1)))
         (else (error "unknown expression 
                       type: DERIV" exp))))
+
+
+(define t '(** x 5))
+(define q '(* x y (+ x 3)))
+
