@@ -8,7 +8,7 @@
 
 (define (equal? l1 l2)
   (cond ((eq? l1 '()) #t)
-        ((pair? (car l1)) (eq? (car l1) (car l2)))
+        ((pair? (car l1)) (equal? (car l1) (car l2)))
         (else
          (and (eq? (car l1) (car l2)) (equal? (cdr l1) (cdr l2))))))
 
