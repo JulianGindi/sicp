@@ -1,4 +1,5 @@
 #lang sicp
+(#%require "utils.rkt")
 
 (define (variable? x) (symbol? x))
 
@@ -31,13 +32,16 @@
   (and (pair? x) (eq? (car x) '+)))
 
 (define (addend s) (cadr s))
-(define (augend s) (caddr s))
+(define (augend s)    
+  (accumulate make-sum 0 (cddr s))) 
+  
+(define (multiplicand p)  
+  (accumulate make-product 1 (cddr  p))) 
 
 (define (product? x)
   (and (pair? x) (eq? (car x) '*)))
 
 (define (multiplier p) (cadr p))
-(define (multiplicand p) (caddr p))
 
 (define (base e)
   (cadr e))
@@ -54,7 +58,6 @@
 
 (define (exponentiation? e)
   (and (pair? e) (eq? (car e) '**)))
-
 
 (define (deriv exp var)
   (cond ((number? exp) 0)
@@ -80,5 +83,4 @@
 
 
 (define t '(** x 5))
-(define q '(* x y (+ x 3)))
-
+(define z '(x + 3 * (x + y + 2)))
