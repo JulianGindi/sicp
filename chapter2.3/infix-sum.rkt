@@ -15,3 +15,14 @@
   (if (> (length (cddr s)) 1)
       (cddr s)
       (caddr s)))
+
+(define (isum sumexp)
+  (define (iter sumexp total)
+    (cond ((number? sumexp) (+ sumexp total))
+          ((number? (augend sumexp)) (+ total (addend sumexp) (augend sumexp)))
+          (else (iter (augend sumexp) (+ total (addend sumexp))))))
+  (iter sumexp 0))
+
+
+
+(define t '(2 + 4 + 5 + 6))
