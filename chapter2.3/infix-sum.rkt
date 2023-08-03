@@ -19,10 +19,13 @@
 (define (isum sumexp)
   (define (iter sumexp total)
     (cond ((number? sumexp) (+ sumexp total))
-          ((number? (augend sumexp)) (+ total (addend sumexp) (augend sumexp)))
+          ((and (number? (addend sumexp)) (number? (augend sumexp)))
+           (+ total (addend sumexp) (augend sumexp)))
+          ((sum? (addend sumexp)) (iter (augend sumexp) (+ total (iter (addend sumexp) 0))))
           (else (iter (augend sumexp) (+ total (addend sumexp))))))
   (iter sumexp 0))
 
 
 
 (define t '(2 + 4 + 5 + 6))
+(define u '(2 + (4 + 5) + 6))
