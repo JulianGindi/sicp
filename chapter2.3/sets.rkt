@@ -33,14 +33,17 @@
                           set1
                           (cdr set2)))))))
 
-(define (union-set set1 set2)
-  (cond ((null? set1)
-         set2)
-        ((element-of-set? (car set1) set2)
-         (union-set (cdr set1) set2))
-        (else (cons (car set1)
-                    (union-set (cdr set1) set2)))))
+(define (union-set set1 set2) 
+  (cond  ((null? set1) set2) 
+         ((null? set2) set1) 
+         ((= (car set1) (car set2))  
+          (cons (car set1) (union-set (cdr set1) (cdr set2)))) 
+         ((< (car set1) (car set2))   
+          (cons (car set1) (union-set (cdr set1) set2))) 
+         (else  
+          (cons (car set2) (union-set set1 (cdr set2)))))) 
+        
 
 (define set1 '(1 2 3 4 5))
 (define set2 '(3 4 5 6 7 8))
-(define set3 (uset '(2 3 2 1 3 2 2)))
+
